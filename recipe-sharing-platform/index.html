@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Sharing Platform</title>
+    <style>
+    body {
+        background-color: blue;
+    }
+    </style>
+</head>
+<body>
+    <h1>Recipe Sharing Platform</h1>
+
+    <div id="recipes"></div>
+
+    <script>
+        fetch('/recipes')
+            .then(response => response.json())
+            .then(recipes => {
+                const recipesDiv = document.getElementById('recipes');
+                recipes.forEach(recipe => {
+                    const recipeDiv = document.createElement('div');
+                    recipeDiv.innerHTML = `
+                        <h2>${recipe.name}</h2>
+                        <p>Description: ${recipe.description}</p>
+                        <p>Ingredients: ${recipe.ingredients}</p>
+                        <p>Instructions: ${recipe.instructions}</p>
+                        <p>Author: ${recipe.author}</p>
+                    `;
+                    recipesDiv.appendChild(recipeDiv);
+                });
+            })
+            .catch(error => console.error('Error fetching recipes:', error));
+    </script>
+</body>
+</html>
